@@ -36,6 +36,10 @@ allowed_extensions = ['.jpeg', '.jpg', '.png', '.bmp', '.tiff', '.psd']
 if not os.path.exists(matches_dir):
     os.makedirs(matches_dir)
 
+# Initialize counters for matches and downloaded images
+matches = 0
+downloaded_images = 0
+
 # Loop through the images in the websites folder and its subfolders
 for root, dirs, files in os.walk(websites_dir):
     for file in files:
@@ -49,6 +53,7 @@ for root, dirs, files in os.walk(websites_dir):
         try:
             image = Image.open(image_path)
             image_hash = average_hash(image)
+            downloaded_images += 1
         except Exception as e:
             print(f'Error loading {image_path}: {e}')
             continue
@@ -75,8 +80,15 @@ for root, dirs, files in os.walk(websites_dir):
                 found_match = True
                 match_path = os.path.join(matches_dir, file)
                 shutil.copy(image_path, match_path)
+                matches += 1
                 print(f'Found a match: {image_path} -> {match_path}')
 
         # Print an error message if no match was found
         if not found_match:
             print(f'No match found for {image_path}')
+
+# Print the number of downloaded images and matches
+print(f'\nDownloaded images: {downloaded_images}')
+print(f'Matches: {matches-1}')
+
+# print({website} < {downloaded_images}, jpeg, .jpg, .png, .bmp, .tiff, .psd)
