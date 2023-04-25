@@ -1,5 +1,6 @@
 import os
 import shutil
+import datetime
 from PIL import Image
 from art import *
 from imagehash import average_hash
@@ -75,13 +76,25 @@ for root, dirs, files in os.walk(websites_dir):
                 print(f'Error loading {sample_path}: {e}')
                 continue
 
-            # Compare the hashes and copy the image if they match
+           # Compare the hashes and copy the image if they match
             if image_hash == sample_hash:
                 found_match = True
                 match_path = os.path.join(matches_dir, file)
                 shutil.copy(image_path, match_path)
                 matches += 1
                 print('\033[92m' + f'Found a match: {image_path} -> {match_path}' + '\033[0m')
+
+                # Create a text file with match information
+                match_info = f'Match found for {image_path}\n'
+                match_info += f'Matched with {sample_path}\n'
+                match_info += f'Date and time: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n'
+                match_info += f'URL scanned: {website}\n'
+
+                # Write match information to a text file
+                match_file_name = os.path.splitext(file)[0] + '_log.txt'
+                match_file_path = os.path.join(matches_dir, match_file_name)
+                with open(match_file_path, 'w') as f:
+                    f.write(match_info)
 
         # Print an error message if no match was found
         if not found_match:
@@ -91,6 +104,22 @@ for root, dirs, files in os.walk(websites_dir):
 print(f'\nDownloaded images: {downloaded_images}')
 print(f'Matches: {matches}')
 if matches == 0:
+    print()
     print('\033[93m' + f'No matches found' + '\033[0m')
 else:
+    print()
     print('\033[92m' + f'Matches found, please check Matches folder!' + '\033[0m')
+
+    path = "./Websites"
+    print()
+    print("Deleting Websites folder... Please wait before closing")
+    if os.path.isfile(path) or os.path.islink(path):
+        os.remove(path)  # remove the file
+    elif os.path.isdir(path):
+        shutil.rmtree(path)  # remove dir and all contains
+        print()
+        print('\033[92m' + f'Deletion successful!' + '\033[0m')
+    else:
+        print()
+        print('\033[93m' + f'Deletion failed. Please manually delete Websites folder!' + '\033[0m')
+        raise ValueError("file {} is not a file or dir.".format(path))
