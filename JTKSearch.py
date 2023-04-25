@@ -18,11 +18,11 @@ print("")
 website = input("Enter website domain: ")
 
 # Get user input for years
-start_year = int(input("Enter start year: "))
-end_year = int(input("Enter end year: "))
+start_year = int(input("Enter start date: "))
+end_year = int(input("Enter end date: "))
 
 # Run the wayback_machine_downloader command
-command = f'wayback_machine_downloader {website} --o "/\.(jpeg|jpg|png|bmp|tiff|psd)$/i" -f {start_year} -t {end_year} -d ../JTKSearch/Websites -c 20'
+command = f'wayback_machine_downloader {website} --o "/\.(jpeg|jpg|png|bmp|tiff|psd)$/i" -f {start_year} -t {end_year} -d ../JTKSearch/Websites -c 6'
 subprocess.run(command, shell=True)
 
 # Define the path to the folders
@@ -101,7 +101,7 @@ for root, dirs, files in os.walk(websites_dir):
             print('\033[93m' + f'No match found for {image_path}' + '\033[0m')
 
 # Print the number of downloaded images and matches
-print(f'\nDownloaded images: {downloaded_images}')
+print(f'\nScanned images: {downloaded_images}')
 print(f'Matches: {matches}')
 if matches == 0:
     print()
@@ -110,16 +110,16 @@ else:
     print()
     print('\033[92m' + f'Matches found, please check Matches folder!' + '\033[0m')
 
-    path = "./Websites"
+path = "./Websites"
+print()
+print("Deleting Websites folder... Please wait before closing")
+if os.path.isfile(path) or os.path.islink(path):
+    os.remove(path)  # remove the file
+elif os.path.isdir(path):
+    shutil.rmtree(path)  # remove dir and all contains
     print()
-    print("Deleting Websites folder... Please wait before closing")
-    if os.path.isfile(path) or os.path.islink(path):
-        os.remove(path)  # remove the file
-    elif os.path.isdir(path):
-        shutil.rmtree(path)  # remove dir and all contains
-        print()
-        print('\033[92m' + f'Deletion successful!' + '\033[0m')
-    else:
-        print()
-        print('\033[93m' + f'Deletion failed. Please manually delete Websites folder!' + '\033[0m')
-        raise ValueError("file {} is not a file or dir.".format(path))
+    print('\033[92m' + f'Deletion successful!' + '\033[0m')
+else:
+    print()
+    print('\033[93m' + f'Deletion failed. Please manually delete Websites folder!' + '\033[0m')
+    raise ValueError("file {} is not a file or dir.".format(path))
