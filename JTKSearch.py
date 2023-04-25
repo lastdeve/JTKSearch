@@ -8,9 +8,9 @@ import subprocess
 
 print("-----------------------------------------------------------------------------------------------------")
 tprint("JTKSearch")
-print("This program uses the ""wayback machine downloader"" tool to download images from a website between two specified dates. It then checks each downloaded image with a set of sample images to see if there is a match. The goal of the program is to find the original source of the ""Jeff the Killer"" image used in the Creepypasta story.")
+print("This program uses the ""wayback machine downloader"" tool to download images from a website between two specified dates. It then checks each downloaded image with a set of sample images to see if there is a match. The goal of the program is to find the original source of the ""Jeff the Killer"" image used in the Creepypasta story. Remember to use at your own risk!")
 print("")
-print("made by lastdeve")
+print("made by Lastdeve")
 print("-----------------------------------------------------------------------------------------------------")
 print("")
 
@@ -22,7 +22,7 @@ start_year = int(input("Enter start date: "))
 end_year = int(input("Enter end date: "))
 
 # Run the wayback_machine_downloader command
-command = f'wayback_machine_downloader {website} --o "/\.(jpeg|jpg|png|bmp|tiff|psd)$/i" -f {start_year} -t {end_year} -d ../JTKSearch/Websites -c 6'
+command = f'wayback_machine_downloader {website} --o "/\.(jpeg|jpg|png|bmp|tiff|psd)$/i" -f {start_year} -t {end_year} -d ../JTKSearch/Websites -c 20'
 subprocess.run(command, shell=True)
 
 # Define the path to the folders
