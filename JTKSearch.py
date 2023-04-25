@@ -81,14 +81,16 @@ for root, dirs, files in os.walk(websites_dir):
                 match_path = os.path.join(matches_dir, file)
                 shutil.copy(image_path, match_path)
                 matches += 1
-                print(f'Found a match: {image_path} -> {match_path}')
+                print('\033[92m' + f'Found a match: {image_path} -> {match_path}' + '\033[0m')
 
         # Print an error message if no match was found
         if not found_match:
-            print(f'No match found for {image_path}')
+            print('\033[93m' + f'No match found for {image_path}' + '\033[0m')
 
 # Print the number of downloaded images and matches
 print(f'\nDownloaded images: {downloaded_images}')
-print(f'Matches: {matches-1}')
-
-# print({website} < {downloaded_images}, jpeg, .jpg, .png, .bmp, .tiff, .psd)
+print(f'Matches: {matches}')
+if matches == 0:
+    print('\033[93m' + f'No matches found' + '\033[0m')
+else:
+    print('\033[92m' + f'Matches found, please check Matches folder!' + '\033[0m')
