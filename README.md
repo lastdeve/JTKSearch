@@ -8,6 +8,10 @@ JTKSearch is a Python program that uses the "wayback machine downloader" tool to
 - Ruby (for running wayback_machine_downloader tool). Ruby can be downloaded from https://www.ruby-lang.org/en/downloads/
 - wayback_machine_downloader tool (https://github.com/hartator/wayback-machine-downloader#advanced-usage)
 
+If you already have Ruby installed, then run this to install wayback machine downloader :
+```
+gem install wayback_machine_downloader
+```
 ## Usage
 
 1. Download the release version of JTKSearch, which includes an executable file.
@@ -19,3 +23,6 @@ Note: The program may take a while to run, depending on the size of the website 
 ## License
 
 This program is licensed under the MIT License. See the LICENSE file for details.
+
+## Disclaimer
+The author(s) of this program are not responsible for any illegal activities performed with this software. It is the user's responsibility to comply with all applicable laws and regulations.
