@@ -1,17 +1,20 @@
 import os
 import shutil
+import time
 import datetime
 from PIL import Image
 from art import *
 from imagehash import average_hash
 import subprocess
 
-print("-----------------------------------------------------------------------------------------------------")
+print("-------------------------------------------------------------------------------------------------------------------")
 tprint("JTKSearch")
 print("This program uses the ""wayback machine downloader"" tool to download images from a website between two specified dates. It then checks each downloaded image with a set of sample images to see if there is a match. The goal of the program is to find the original source of the ""Jeff the Killer"" image used in the Creepypasta story. Remember to use at your own risk!")
 print("")
-print("made by Lastdeve")
-print("-----------------------------------------------------------------------------------------------------")
+print('\033[91m' + "NOTE: Many old .jp websites may contain NSFW/NSFL content. It is strongly recommended that you do not view the images and that you shred them immediately after processing." + '\033[0m')
+print()
+print('\033[1m' + "Made by Lastdeve" + '\033[0m')
+print("-------------------------------------------------------------------------------------------------------------------")
 print("")
 
 # Get user input for website
@@ -22,7 +25,7 @@ start_year = int(input("Enter start date: "))
 end_year = int(input("Enter end date: "))
 
 # Run the wayback_machine_downloader command
-command = f'wayback_machine_downloader {website} --o "/\.(jpeg|jpg|png|bmp|tiff|psd)$/i" -f {start_year} -t {end_year} -d ../JTKSearch/Websites -c 20'
+command = f'wayback_machine_downloader {website} --o "/\.(jpeg|jpg|png|bmp|tiff|psd)$/i" -f {start_year} -t {end_year} -d ../JTKSearch/Websites -c 6'
 subprocess.run(command, shell=True)
 
 # Define the path to the folders
@@ -106,20 +109,34 @@ print(f'Matches: {matches}')
 if matches == 0:
     print()
     print('\033[93m' + f'No matches found' + '\033[0m')
+    print()
 else:
     print()
     print('\033[92m' + f'Matches found, please check Matches folder!' + '\033[0m')
+    print()
 
-path = "./Websites"
+# Shredding process 
+print('\033[93m' + f'Shredding process starting in 10 seconds... please wait or close to save images' + '\033[0m')
+time.sleep(10)
 print()
-print("Deleting Websites folder... Please wait before closing")
-if os.path.isfile(path) or os.path.islink(path):
-    os.remove(path)  # remove the file
-elif os.path.isdir(path):
-    shutil.rmtree(path)  # remove dir and all contains
-    print()
-    print('\033[92m' + f'Deletion successful!' + '\033[0m')
-else:
-    print()
-    print('\033[93m' + f'Deletion failed. Please manually delete Websites folder!' + '\033[0m')
-    raise ValueError("file {} is not a file or dir.".format(path))
+
+def shred_folder(path):
+    try:
+        # Delete the folder and its contents recursively
+        shutil.rmtree(path)
+        
+        # Overwrite the space with random data
+        with open(path, 'wb') as f:
+            f.write(os.urandom(os.path.getsize(path)))
+        
+        print('\033[92m' + f'Successfully shredded images!' + '\033[0m')
+        os.remove("Websites")
+    except Exception as e:
+        print('\033[93m' + f'Error shredding images! {path}: {str(e)} \033[91mPlease shred it manually for safety reasons!\033[0m')
+
+shred_folder('./Websites')
+
+print()
+a = input('Press Enter to exit')
+if a:
+    exit(0)
