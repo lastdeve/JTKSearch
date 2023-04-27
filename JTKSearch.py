@@ -9,10 +9,6 @@ import subprocess
 
 print("-------------------------------------------------------------------------------------------------------------------")
 tprint("JTKSearch")
-print("This program uses the ""wayback machine downloader"" tool to download images from a website between two specified dates. It then checks each downloaded image with a set of sample images to see if there is a match. The goal of the program is to find the original source of the ""Jeff the Killer"" image used in the Creepypasta story. Remember to use at your own risk!")
-print("")
-print('\033[91m' + "NOTE: Many old .jp websites may contain NSFW/NSFL content. It is strongly recommended that you do not view the images and that you shred them immediately after processing." + '\033[0m')
-print()
 print('\033[1m' + "Made by Lastdeve" + '\033[0m')
 print("-------------------------------------------------------------------------------------------------------------------")
 print("")
