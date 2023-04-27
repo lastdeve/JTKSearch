@@ -14,9 +14,13 @@ gem install wayback_machine_downloader
 ```
 ## Usage
 
+**Windows**
+
 1. Download the release version of JTKSearch, which includes an executable file.
 4. Run the program by double-clicking the executable file
 5. Follow the prompts to enter the website domain, start and end years for the search.
+
+**Linux**
 
 Note: The program may take a while to run, depending on the size of the website and the number of images downloaded.
 
