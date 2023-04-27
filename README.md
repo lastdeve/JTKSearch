@@ -22,6 +22,16 @@ gem install wayback_machine_downloader
 
 **Linux**
 
+1. Download source code or clone it using git:
+```
+git clone https://github.com/lastdeve/JTKSearch
+```
+2. Run JTKSearch.py
+```
+python JTKSearch.py
+```
+3. Follow the prompts to enter the website domain, start and end years for the search.
+
 Note: The program may take a while to run, depending on the size of the website and the number of images downloaded.
 
 ## License

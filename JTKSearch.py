@@ -10,8 +10,7 @@ import subprocess
 print("-------------------------------------------------------------------------------------------------------------------")
 tprint("JTKSearch")
 print('\033[1m' + "Made by Lastdeve" + '\033[0m')
-print("-------------------------------------------------------------------------------------------------------------------")
-print("")
+print("-------------------------------------------------------------------------------------------------------------------\n")
 
 # Get user input for website
 website = input("Enter website domain: ")
@@ -101,38 +100,35 @@ for root, dirs, files in os.walk(websites_dir):
 
 # Print the number of downloaded images and matches
 print(f'\nScanned images: {downloaded_images}')
-print(f'Matches: {matches}')
+print(f'Matches: {matches}\n')
 if matches == 0:
-    print()
-    print('\033[93m' + f'No matches found' + '\033[0m')
-    print()
+    print('\033[93m' + f'No matches found' + '\033[0m\n')
 else:
-    print()
-    print('\033[92m' + f'Matches found, please check Matches folder!' + '\033[0m')
-    print()
+    print('\033[92m' + f'Matches found, please check Matches folder!' + '\033[0m\n')
 
 # Shredding process 
-print('\033[93m' + f'Shredding process starting in 10 seconds... please wait or close to save images' + '\033[0m')
+print('\033[93m' + f'Shredding process starting in 10 seconds... please wait or close to save images' + '\033[0m\n')
 time.sleep(10)
-print()
 
 def shred_folder(path):
     try:
         # Delete the folder and its contents recursively
+        print("Trying to delete images recursively...\n")
         shutil.rmtree(path)
         
         # Overwrite the space with random data
+        print("Overwriting images with random data...\n")
         with open(path, 'wb') as f:
             f.write(os.urandom(os.path.getsize(path)))
         
-        print('\033[92m' + f'Successfully shredded images!' + '\033[0m')
+        print('\033[92m' + f'Successfully shredded images!' + '\033[0m\n')
         os.remove("Websites")
     except Exception as e:
-        print('\033[93m' + f'Error shredding images! {path}: {str(e)} \033[91mPlease shred it manually for safety reasons!\033[0m')
+        print('\033[91m' + f'Error shredding images or nothing was downloaded!\033[0m\n')
+        print('\033[93m' + f'Or you are running Linux, where the shredding is not supported yet. You need to shred the /websites folder yourself' + '\033[0m\n')
 
-shred_folder('./Websites')
+shred_folder('./Websites\n')
 
-print()
 a = input('Press Enter to exit')
 if a:
     exit(0)
