@@ -127,7 +127,7 @@ def shred_folder(path):
         print('\033[91m' + f'Error shredding images or nothing was downloaded!\033[0m\n')
         print('\033[93m' + f'Or you are running Linux, where the shredding is not supported yet. You need to shred the /websites folder yourself!' + '\033[0m\n')
 
-shred_folder('./Websites\n')
+shred_folder('./Websites')
 
 a = input('Press Enter to exit')
 if a:
