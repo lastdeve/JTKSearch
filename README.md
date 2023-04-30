@@ -2,12 +2,6 @@
 
 JTKSearch is a Python program that searches for a specific image (Jeff the Killer) on a given website between two specified dates. It does this by using the Wayback Machine Downloader tool to download all the images from the specified website between the specified dates. It then checks each downloaded image with a set of sample images to see if there is a match with the Jeff the Killer image.
 
-## How the comparison works
-
-The comparison process of JTKSearch involves using the Perceptual Hash algorithm from the imagehash library to compute the similarity between the downloaded images and the sample images. This index calculates the degree of resemblance between two images based on their luminance, contrast, and structure. The comparison is carried out in two stages: firstly, each image is assessed to determine if it could be a potential match, and is placed in the Matches folder if it is. Subsequently, its similarity is calculated by comparing its relative likeness with the Jeff the Killer image. Therefore, it's possible that some images with a similarity of less than 1% could still be included in the Matches folder. This is because, although their relative similarity in comparison to an exact copy of Jeff the Killer is less than 1%, they still exhibit enough similarities to be considered a match.
-
-![Perceptual Hashing Diagram](Icons/Graph.png)
-
 ## Prerequisites
 
 - Python 3.6 or higher
@@ -39,6 +33,12 @@ python JTKSearch.py
 3. Follow the prompts to enter the website domain, start and end years for the search.
 
 Note: The program may take a while to run, depending on the size of the website and the number of images downloaded.
+
+## How the comparison works
+
+The comparison process of JTKSearch involves using the Perceptual Hash algorithm from the imagehash library to compute the similarity between the downloaded images and the sample images. This index calculates the degree of resemblance between two images based on their luminance, contrast, and structure. The comparison is carried out in two stages: firstly, each image is assessed to determine if it could be a potential match, and is placed in the Matches folder if it is. Subsequently, its similarity is calculated by comparing its relative likeness with the Jeff the Killer image. Therefore, it's possible that some images with a similarity of less than 1% could still be included in the Matches folder. This is because, although their relative similarity in comparison to an exact copy of Jeff the Killer is less than 1%, they still exhibit enough similarities to be considered a match.
+
+![Perceptual Hashing Diagram](Icons/Graph.png)
 
 ## License
 
