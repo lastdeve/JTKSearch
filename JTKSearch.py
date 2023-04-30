@@ -4,7 +4,7 @@ import time
 import datetime
 from PIL import Image
 from art import *
-from imagehash import average_hash
+from imagehash import phash
 import subprocess
 
 print("-------------------------------------------------------------------------------------------------------------------")
@@ -12,12 +12,10 @@ tprint("JTKSearch")
 print('\033[1m' + "Made by Lastdeve" + '\033[0m')
 print("-------------------------------------------------------------------------------------------------------------------\n")
 
-# Get user input for website
+# Get user input
 website = input("Enter website domain: ")
-
-# Get user input for years
-start_year = int(input("Enter start date: "))
-end_year = int(input("Enter end date: "))
+start_year = int(input("Enter start date (yyyymmdd): "))
+end_year = int(input("Enter end date (yyyymmdd): "))
 
 # Run the wayback_machine_downloader command
 command = f'wayback_machine_downloader {website} --o "/\.(jpeg|jpg|png|bmp|tiff|psd)$/i" -f {start_year} -t {end_year} -d ../JTKSearch/Websites -c 6'
@@ -51,7 +49,7 @@ for root, dirs, files in os.walk(websites_dir):
         image_path = os.path.join(root, file)
         try:
             image = Image.open(image_path)
-            image_hash = average_hash(image)
+            image_hash = phash(image)
             downloaded_images += 1
         except Exception as e:
             print(f'Error loading {image_path}: {e}')
@@ -69,22 +67,28 @@ for root, dirs, files in os.walk(websites_dir):
             sample_path = os.path.join(samples_dir, sample_file)
             try:
                 sample_image = Image.open(sample_path)
-                sample_hash = average_hash(sample_image)
+                sample_hash = phash(sample_image)
+                print(f'Comparing with {sample_path}:...')
             except Exception as e:
                 print(f'Error loading {sample_path}: {e}')
                 continue
 
            # Compare the hashes and copy the image if they match
-            if image_hash == sample_hash:
+            similarity = 1 - (image_hash - sample_hash) / len(image_hash.hash) ** 0.5 / 64
+            if similarity >= 0.93:
                 found_match = True
                 match_path = os.path.join(matches_dir, file)
                 shutil.copy(image_path, match_path)
                 matches += 1
                 print('\033[92m' + f'Found a match: {image_path} -> {match_path}' + '\033[0m')
+                similarityProcent = (similarity - 0.93) / 0.07 * 100
+                roundedSimilarityProcent = round(similarityProcent, 2)
+
 
                 # Create a text file with match information
                 match_info = f'Match found for {image_path}\n'
                 match_info += f'Matched with {sample_path}\n'
+                match_info += f'Similarity: {roundedSimilarityProcent}%\n'
                 match_info += f'Date and time: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}\n'
                 match_info += f'URL scanned: {website}\n'
 
